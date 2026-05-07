@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>〇○〇美容院</title>
+
+  <style>
+    body { font-family: "Helvetica Neue", Arial, sans-serif; padding: 1em; background: #f9f9f9; }
+    h1 { text-align: center; color: #009fe8;font-size: 20px;
+  margin-bottom: 20px; }
+    .form-group { margin-bottom: 1.5em; }
+    textarea, input[type="text"] { width: 100%; padding: 0.9em; border-radius: 10px; border: 2px solid #ccc; }
+    .option-group { display: flex; flex-direction: column; gap: 0.6em; }
+    .option-label { padding: 1em; border: 2px solid #ccc; border-radius: 30px; text-align: center; cursor: pointer; }
+    input[type="radio"] { display: none; }
+    input[type="radio"]:checked + .option-label { background: #009fe8; color: white; border-color: #009fe8; }
+    button { width: 100%; padding: 1em; background: #009fe8; color: #fff; border: none; border-radius: 10px; }
+  </style>
+</head>
+
+<body>
+
+<h1>〇○〇美容院</h1>
+
+<form id="surveyForm">
+
+<!-- 満足度 -->
+<div class="form-group">
+<label>満足度</label>
+<div class="option-group">
+<input type="radio" name="satisfaction" value="満足" id="s1"><label for="s1" class="option-label">満足</label>
+<input type="radio" name="satisfaction" value="やや満足" id="s2"><label for="s2" class="option-label">やや満足</label>
+<input type="radio" name="satisfaction" value="やや不満" id="s3"><label for="s3" class="option-label">やや不満</label>
+<input type="radio" name="satisfaction" value="不満" id="s4"><label for="s4" class="option-label">不満</label>
+</div>
+</div>
+
+<!-- メニュー -->
+<div class="form-group">
+<label>ご利用メニュー</label>
+<div class="option-group">
+<input type="radio" name="menu" value="カット" id="m1"><label for="m1" class="option-label">カット</label>
+<input type="radio" name="menu" value="カット＆カラー" id="m2"><label for="m2" class="option-label">カット＆カラー</label>
+<input type="radio" name="menu" value="カラー" id="m3"><label for="m3" class="option-label">カラー</label>
+<input type="radio" name="menu" value="パーマ" id="m4"><label for="m4" class="option-label">パーマ</label>
+<input type="radio" name="menu" value="ヘッドスパ" id="m5"><label for="m5" class="option-label">ヘッドスパ</label>
+<input type="radio" name="menu" value="その他" id="m6"><label for="m6" class="option-label">その他</label></div>
+</div>
+
+<!-- きっかけ -->
+<div class="form-group">
+<label>当店を知ったきっかけ</label>
+<div class="option-group">
+<input type="radio" name="source" value="Google検索" id="c1"><label for="c1" class="option-label">Google検索</label>
+<input type="radio" name="source" value="Google口コミ" id="c2"><label for="c2" class="option-label">Google口コミ</label>
+<input type="radio" name="source" value="Instagram（インスタグラム）" id="c3"><label for="c3" class="option-label">Instagram（インスタグラム）</label>
+<input type="radio" name="source" value="紹介（ご家族・ご友人など）" id="c4"><label for="c4" class="option-label">紹介（ご家族・ご友人など）</label>
+<input type="radio" name="source" value="リピート" id="c5"><label for="c5" class="option-label">リピート</label>
+<input type="radio" name="source" value="その他" id="c6"><label for="c6" class="option-label">その他</label>
+</div>
+</div>
+
+
+<!-- コメント -->
+<div class="form-group">
+  <p style="margin-bottom:8px;">
+    どのようなメニューでご利用頂いたかご記入後、感想をご記入ください
+  </p>
+  <textarea name="comment" placeholder="例）カット＆カラーで利用しました。担当してくれた方が要望を丁寧に聞いてカットしてくれて仕上がりも大満足でした。"></textarea>
+</div>
+
+<button type="submit">送信</button>
+
+</form>
+
+<script>
+document.getElementById("surveyForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = new FormData(this);
+
+  localStorage.setItem("satisfaction", data.get("satisfaction"));
+  localStorage.setItem("menu", data.get("menu"));
+  localStorage.setItem("source", data.get("source"));
+  localStorage.setItem("comment", data.get("comment"));
+
+  window.location.href = "thanks.html";
+});
+</script>
+
+</body>
+</html>
