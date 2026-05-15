@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アンケート送信完了</title>
+
+<style>
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: #f4f7f9;
+  margin: 0;
+  padding: 2em 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  background: #fff;
+  padding: 2em;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #009fe8;
+  margin-bottom: 1em;
+}
+
+.section {
+  margin-bottom: 1.5em;
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  display: block;
+  color: #555;
+}
+
+.value {
+  background: #f0f8ff;
+  padding: 0.8em 1em;
+  border-radius: 8px;
+  word-break: break-word;
+}
+
+/* コピーボタン */
+.copy-btn {
+  display: block;
+  width: 100%;
+  padding: 1em;
+  background: #009fe8;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+/* 説明文 */
+.note {
+  text-align: center;
+  font-size: 0.9em;
+  color: #777;
+  margin-top: 0.5em;
+}
+
+/* 口コミボタン（初期は非表示） */
+.review-btn {
+  display: none;
+  text-align: center;
+  margin-top: 1em;
+  padding: 1em;
+  background: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+}
+
+/* メッセージ */
+.review-message {
+  text-align: center;
+  margin-top: 1em;
+  font-weight: bold;
+  color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>アンケートありがとうございました</h1>
+
+<div class="section">
+  <span class="label">満足度</span>
+  <div id="satisfaction" class="value"></div>
+</div>
+
+<div class="section">
+  <span class="label">メニュー</span>
+  <div id="menu" class="value"></div>
+</div>
+
+<div class="section">
+  <span class="label">当店を知ったきっかけ</span>
+  <div id="source" class="value"></div>
+</div>
+
+<div class="section">
+  <span class="label">コメント</span>
+  <div id="comment" class="value"></div>
+</div>
+
+<!-- 口コミメッセージ -->
+<div id="review-message" class="review-message"></div>
+
+<button class="copy-btn" id="copyBtn" style="display:none;">
+コメントをコピー
+</button>
+
+<a href="https://www.google.com/maps/place/" target="_blank" class="review-btn">
+  Google口コミに投稿する
+</a>
+
+</div>
+
+<script>
+const satisfaction = localStorage.getItem("satisfaction") || "";
+const menu = localStorage.getItem("menu") || "";
+const source = localStorage.getItem("source") || "";
+const comment = localStorage.getItem("comment") || "";
+
+// 表示
+document.getElementById("satisfaction").textContent = satisfaction;
+document.getElementById("menu").textContent = menu;
+document.getElementById("source").textContent = source;
+document.getElementById("comment").textContent = comment;
+
+// 口コミボタン制御
+const reviewBtn = document.querySelector(".review-btn");
+const reviewMessage = document.getElementById("review-message");
+const copyBtn = document.getElementById("copyBtn");
+
+// ▼ 分岐（ここが重要）
+if(satisfaction === "満足" && reviewBtn){
+  reviewBtn.style.display = "block";   // 口コミボタン表示
+  copyBtn.style.display = "block";     // コピー表示
+
+  reviewMessage.textContent = "ご満足いただけた方へ🙏 ぜひ口コミのご協力をお願いします";
+
+}else{
+  if(reviewBtn) reviewBtn.style.display = "none"; // 非表示
+  if(copyBtn) copyBtn.style.display = "none";     // 非表示
+
+  reviewMessage.textContent = "貴重なご意見ありがとうございます。今後の改善に活かします。";
+}
+
+// コピー機能
+copyBtn.addEventListener("click", () => {
+  if(comment.trim() === ""){
+    alert("コメントが入力されていません");
+    return;
+  }
+  navigator.clipboard.writeText(comment);
+  alert("コピーしました！");
+});
+</script>
+
+</body>
+</html>
